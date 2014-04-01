@@ -1,0 +1,53 @@
+apply plugin: 'groovy'
+  
+group = 'timetracking'
+mainClassName = "timetracking.Main"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+   groovy localGroovy()
+
+   groovy 'org.codehaus.groovy:groovy-all:2.2.2'
+   compile 'org.codehaus.groovyfx:groovyfx:0.3.1'
+
+   compile files("${System.properties['java.home']}/../lib/ant-javafx.jar")
+   compile files("${System.properties['java.home']}/lib/jfxrt.jar")
+
+   testCompile 'junit:junit:4.11'
+}
+ 
+task run(type: JavaExec) {
+  main = mainClassName
+  classpath sourceSets.main.runtimeClasspath
+}
+ 
+task makeDirs(description:'make all dirs for project setup') << {
+  def sources = [sourceSets.main, sourceSets.test]
+  sources*.allSource*.srcDirs.flatten().each { File srcDir ->
+        println "making $srcDir"
+        srcDir.mkdirs()
+  } 
+}
+ 
+task wrap(type:Wrapper, description:"create a gradlew") {
+    gradleVersion = '1.11'
+}
+
+jar {
+  manifest {
+    attributes("Main-Class": mainClassName)
+  }
+}
+
+// uberjar adds in groovy jars to make this easy: "java -jar MyApp.jar"
+task uberjar(type: Jar, dependsOn:[':compileJava', ':compileGroovy']) {
+  from files(sourceSets.main.output.classesDir)
+  from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+
+  manifest {
+    attributes 'Main-Class': mainClassName
+  }
+}
