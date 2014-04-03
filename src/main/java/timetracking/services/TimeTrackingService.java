@@ -15,7 +15,7 @@ public class TimeTrackingService {
     public static enum Status { IDLE, ACTIVE }
 
     private static final long IDLE_CHECKER_INTERVAL = 1000; // 1 second for idle checker interval 
-    private static final long CAPTURE_CHECKER_INTERVAL = 5 * 60 * 1000; // 5 minutes for capture checker interval 
+    private static final long CAPTURE_INTERVAL = 5 * 60 * 1000; // 5 minutes for capture checker interval 
     private static final long IDLE_TIMEOUT = 5 * 60 * 1000; // 5 minutes for idle timeout
 
     private TimeTrackingService.Status status = TimeTrackingService.Status.IDLE;
@@ -67,7 +67,7 @@ public class TimeTrackingService {
         Date now = new Date();
         //Use this if you want to execute it once
         idleTimer.schedule(new CheckIdle(), now, IDLE_CHECKER_INTERVAL);
-        captureTimer.schedule(new Capture(), now, CAPTURE_CHECKER_INTERVAL);
+        captureTimer.schedule(new Capture(), now, CAPTURE_INTERVAL);
     }
 
     private class CheckIdle extends TimerTask{
@@ -76,10 +76,12 @@ public class TimeTrackingService {
             if(imIdleFor >= IDLE_TIMEOUT && TimeTrackingService.this.status == TimeTrackingService.Status.ACTIVE){
                 TimeTrackingService.this.status = TimeTrackingService.Status.IDLE;
                 statusAnnouncer.announce().onChange(TimeTrackingService.Status.IDLE);
+                captureAnnouncer.announce().onCapture(); // making shot on getting idle
             } else 
                 if(imIdleFor < IDLE_TIMEOUT && TimeTrackingService.this.status == TimeTrackingService.Status.IDLE){
                     TimeTrackingService.this.status = TimeTrackingService.Status.ACTIVE;
                     statusAnnouncer.announce().onChange(TimeTrackingService.Status.ACTIVE);
+                    captureAnnouncer.announce().onCapture(); // making shot on getting active
                 } else
                     if(TimeTrackingService.this.status == TimeTrackingService.Status.IDLE){
                         idleAnnouncer.announce().onIdle(imIdleFor);
@@ -90,7 +92,9 @@ public class TimeTrackingService {
 
     private class Capture extends TimerTask{
         public void run(){
-            captureAnnouncer.announce().onCapture();
+            // Capturing only if status is ACTIVE
+            if(TimeTrackingService.this.status == TimeTrackingService.Status.ACTIVE)
+                captureAnnouncer.announce().onCapture();
         }
     }
 
