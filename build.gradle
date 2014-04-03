@@ -1,27 +1,21 @@
-apply plugin: 'groovy'
+//apply plugin: 'groovy'
+apply plugin: 'java'
   
 group = 'timetracking'
-mainClassName = "timetracking.Main"
+project.ext.set('mainClassName', 'timetracking.Main')
 
 repositories {
   mavenCentral()
 }
 
 dependencies {
-   groovy localGroovy()
+   // runtime('org.slf4j:slf4j-api:1.7.6')
+   // runtime('org.slf4j:slf4j-log4j12:1.7.6')
 
-   groovy 'org.codehaus.groovy:groovy-all:2.2.2'
-   compile 'org.codehaus.groovyfx:groovyfx:0.3.1'
-
-   compile files("${System.properties['java.home']}/../lib/ant-javafx.jar")
-   compile files("${System.properties['java.home']}/lib/jfxrt.jar")
-
-   compile('org.codehaus.groovy.modules.http-builder:http-builder:0.7.1' )
-
-   runtime('org.slf4j:slf4j-api:1.7.6')
-   runtime('org.slf4j:slf4j-log4j12:1.7.6')
-
-   testCompile 'junit:junit:4.11'
+  compile("net.java.dev.jna:jna:4.1.0")
+  compile("net.java.dev.jna:jna-platform:4.1.0")
+  
+  testCompile 'junit:junit:4.11'
 }
  
 task run(type: JavaExec) {
@@ -48,8 +42,8 @@ jar {
 }
 
 // uberjar adds in groovy jars to make this easy: "java -jar MyApp.jar"
-task uberjar(type: Jar, dependsOn:[':compileJava', ':compileGroovy']) {
-  from files(sourceSets.main.output.classesDir)
+task uberjar(type: Jar, dependsOn:[':compileJava']) {
+  from files([sourceSets.main.output.classesDir, sourceSets.main.output.resourcesDir])
   from configurations.runtime.asFileTree.files.collect { zipTree(it) }
 
   manifest {
