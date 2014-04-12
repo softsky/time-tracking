@@ -1,0 +1,16 @@
+[
+  // filenames matching these regexps will not be pushed to the database
+  // uncomment to activate; separate entries with ","
+  // ".*~$"
+  // ".*\\.swp$"
+  // ".*\\.bak$"
+  "node_modules",
+  "app",
+  "test",
+  "Gruntfile.js",
+  "bower.json",
+  "karma.conf.js",
+  "karma-e2e.conf.js",
+  "package.json",
+  "README.md"
+]
