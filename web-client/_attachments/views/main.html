@@ -7,29 +7,50 @@
   <h3 class="text-muted">web client</h3>
 </div>
 
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
+<div class="row marketing" ng-if="!loggedIn">
+<form class='form-inline' name='loginForm' ng-submit="submitLogin()">
+    Name <input type='text' name='user' ng-model='loginUser' required>&nbsp;
+    Password <input type='password' name='pass' ng-model='loginPass' required>&nbsp;
+    <button class='btn' type="submit">Login</button>&nbsp;
+</form>
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+<div class="alert alert-info" ng-show="showInfo" ng-if="loggedIn" >
+  <button class="btn" ng-click="logout()">Logout</button>
+  <ul class="pagination">
+    <li><a ng-click="prevClick()" ng-show="db.prevRows.length">Newer</a></li>
+    <li><a ng-click="nextClick()" ng-show="db.nextRow">Older</a></li>
+  </ul>
+  <table class="table table-striped">
+    <thead>
+      <tr><th>UTC</th><th>Subject</th><th>By</th><th>Img</th></tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="row in db.rows" ng-click="rowClick($index)">
+        <td class="span2">{{ row.key }}</td>
+        <td class="span2">{{ row.doc.username }}</td>
+        <td class="span6">{{ formatDate(row) }}</td>
+        <td class="span2">
+          <a ng-href="{{ getImagePath(row) }}" target="_blank">
+            <img ng-src="{{ getImagePath(row) }}" width="100px"/>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+<!-- <div class="alert alert-info" ng-show="showInfo"> -->
+<!--   <button class="btn" ng-click="server.logout()">Logout</button> -->
+<!--   <br><br> -->
+<!--   <pre>server.userCtx = {{ server.userCtx | json }}</pre> -->
+<!--   <pre>server.info = {{ server.info | json }}<pre> -->
+<!--       <pre>server.databases = {{ server.databases | json }}</pre> -->
+<!--       <pre>server.uuids = {{ server.uuids | json }}</pre> -->
+<!--       <pre>server.userDoc = {{ server.userDoc | json }}</pre> -->
+<!--       <pre>softsky_timetracking.info = {{ db.info | json }}</pre> -->
+<!--       <pre>db.rows.length = {{ db.rows.length  }}</pre> -->
+<!-- </div> -->
 
 <div class="footer">
   <p>♥ from the Yeoman team</p>
