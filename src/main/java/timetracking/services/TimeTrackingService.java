@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask; 
 
 import timetracking.event.Announcer;
+import timetracking.Main;
 
 import java.util.EventListener;
 
@@ -14,9 +15,12 @@ import timetracking.idle.*;
 public class TimeTrackingService {
     public static enum Status { IDLE, ACTIVE }
 
-    private static final long IDLE_CHECKER_INTERVAL = 1000; // 1 second for idle checker interval 
-    private static final long CAPTURE_INTERVAL = 5 * 60 * 1000; // 5 minutes for capture checker interval 
-    private static final long IDLE_TIMEOUT = 5 * 60 * 1000; // 5 minutes for idle timeout
+    public static long IDLE_CHECKER_INTERVAL
+        = Long.parseLong(Main.config.getProperty("IDLE_CHECKER_INTERVAL", "1000")); // 1 second for idle checker interval 
+    public static long CAPTURE_INTERVAL
+        = Long.parseLong(Main.config.getProperty("CAPTURE_INTERVAL", "300000")); // 5 minutes for capture checker interval 
+    public static long IDLE_TIMEOUT
+        = Long.parseLong(Main.config.getProperty("IDLE_TIMEOUT", "300000")); // 5 minutes for idle timeout
 
     private TimeTrackingService.Status status = TimeTrackingService.Status.IDLE;
 

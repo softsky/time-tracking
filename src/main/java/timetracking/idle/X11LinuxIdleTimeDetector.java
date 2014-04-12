@@ -23,7 +23,7 @@ import com.sun.jna.platform.unix.X11;
 import com.sun.jna.platform.unix.X11.*;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Instances of this class provide the computer idle time on a Linux system with
@@ -63,14 +63,7 @@ public class X11LinuxIdleTimeDetector implements IdleTimeDetector {
 
 
             public List<String> getFieldOrder(){
-                List<String> list = new ArrayList<String>();
-                list.add("window");
-                list.add("state");
-                list.add("kind");
-                list.add("til_or_since");
-                list.add("idle");
-                list.add("event_mask");
-                return list;
+                return Arrays.asList("window", "state", "kind", "til_or_since", "idle", "event_mask");
             }
 
 	}
@@ -126,9 +119,10 @@ public class X11LinuxIdleTimeDetector implements IdleTimeDetector {
 			// if (info != null) X11.INSTANCE.XFree(info.getPointer());
 			info = null;
 
-			if (display != null)
-				X11.INSTANCE.XCloseDisplay(display);
-			display = null;
+			if (display != null){
+                            X11.INSTANCE.XCloseDisplay(display);
+                            display = null;
+                        }
 		}
 		return idleMillis;
 	}

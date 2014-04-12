@@ -1,4 +1,3 @@
-//apply plugin: 'groovy'
 apply plugin: 'java'
   
 group = 'timetracking'
@@ -9,11 +8,13 @@ repositories {
 }
 
 dependencies {
-   // runtime('org.slf4j:slf4j-api:1.7.6')
-   // runtime('org.slf4j:slf4j-log4j12:1.7.6')
+  runtime('org.slf4j:slf4j-api:1.7.6')
+  runtime('org.slf4j:slf4j-log4j12:1.7.6')
 
   compile("net.java.dev.jna:jna:4.1.0")
   compile("net.java.dev.jna:jna-platform:4.1.0")
+
+  compile("org.ektorp:org.ektorp:1.3.0")
   
   testCompile 'junit:junit:4.11'
 }
@@ -26,13 +27,13 @@ task run(type: JavaExec) {
 task makeDirs(description:'make all dirs for project setup') << {
   def sources = [sourceSets.main, sourceSets.test]
   sources*.allSource*.srcDirs.flatten().each { File srcDir ->
-        println "making $srcDir"
-        srcDir.mkdirs()
+    println "making $srcDir"
+    srcDir.mkdirs()
   } 
 }
  
 task wrap(type:Wrapper, description:"create a gradlew") {
-    gradleVersion = '1.11'
+  gradleVersion = '1.11'
 }
 
 jar {

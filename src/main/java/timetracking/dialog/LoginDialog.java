@@ -10,13 +10,29 @@ import javax.swing.border.*;
 
 import java.io.IOException;
 import javax.imageio.*;
-import java.net.URL;
+import java.net.*;
+
+import org.ektorp.*;
+import org.ektorp.impl.*;
+import org.ektorp.http.*;
+
  
 public class LoginDialog extends JDialog {
 
     private static class Login {
-        public static boolean authenticate(String userName, String password){
-            return true;
+        private final String SERVER_URL = 
+            Main.config.getProperty("SERVER_URL"); // server URL to connect to
+
+        public static boolean authenticate(String userName, String password) throws Exception {
+            Main.httpClient = new StdHttpClient.Builder()
+                .url("http://vm81.softsky.com.ua:5984")
+                .username(userName)
+                .password(password)
+                .build();
+
+            CouchDbInstance dbInstance = new StdCouchDbInstance(Main.httpClient);
+
+            return dbInstance.checkIfDbExists(new DbPath("softsky_timetracking"));
         }
     }
 
@@ -62,7 +78,7 @@ public class LoginDialog extends JDialog {
         cs.gridwidth = 1;
         panel.add(lbUsername, cs);
  
-        lbUsername = new JLabel("Username: ");
+        lbUsername = new JLabel("Username:");
         cs.gridx = 0;
         cs.gridy = 1;
         cs.gridwidth = 1;
@@ -74,7 +90,7 @@ public class LoginDialog extends JDialog {
         cs.gridwidth = 2;
         panel.add(tfUsername, cs);
  
-        lbPassword = new JLabel("Password: ");
+        lbPassword = new JLabel("Password:");
         cs.gridx = 0;
         cs.gridy = 2;
         cs.gridwidth = 1;
@@ -89,26 +105,35 @@ public class LoginDialog extends JDialog {
 
         URL url = Main.class.getResource("/icons/login.png");
         Image img = Toolkit.getDefaultToolkit().getImage(url);
-        btnLogin = new JButton("Login", new ImageIcon(img));
+        btnLogin = new JButton("Login");
+        //btnLogin.setIcon(new ImageIcon(img));
  
         btnLogin.addActionListener(new ActionListener() {
  
                 public void actionPerformed(ActionEvent e) {
-                    if (Login.authenticate(getUsername(), getPassword())) {
+                    try {
+                        if (Login.authenticate(getUsername(), getPassword())) {
+                            JOptionPane.showMessageDialog(LoginDialog.this,
+                                                          "Hi " + getUsername() + "! You have successfully logged in.",
+                                                          "Login",
+                                                          JOptionPane.INFORMATION_MESSAGE);
+                            succeeded = true;
+                            dispose();
+                        }  else {
+                            JOptionPane.showMessageDialog(LoginDialog.this,
+                                                          "Invalid username or password",
+                                                          "Login",
+                                                          JOptionPane.ERROR_MESSAGE);
+                            // reset username and password
+                            tfUsername.setText("");
+                            pfPassword.setText("");
+                            succeeded = false;
+                        }
+                    }catch(Exception ex) {
                         JOptionPane.showMessageDialog(LoginDialog.this,
-                                                      "Hi " + getUsername() + "! You have successfully logged in.",
-                                                      "Login",
-                                                      JOptionPane.INFORMATION_MESSAGE);
-                        succeeded = true;
-                        dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(LoginDialog.this,
-                                                      "Invalid username or password",
+                                                      ex.getMessage(),
                                                       "Login",
                                                       JOptionPane.ERROR_MESSAGE);
-                        // reset username and password
-                        tfUsername.setText("");
-                        pfPassword.setText("");
                         succeeded = false;
  
                     }
