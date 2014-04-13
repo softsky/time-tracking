@@ -10,10 +10,17 @@ import timetracking.config.Config;
 import timetracking.services.TimeTrackingService;
 import timetracking.handlers.TimeTrackingHandlers;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.ektorp.http.*;
+
+import org.apache.commons.cli.*;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 /**
  * @author archer
@@ -21,6 +28,30 @@ import org.ektorp.http.*;
  */
 
 public class Main {
+    /** Options **/
+    public static final Option opConfig =
+        OptionBuilder.hasArg(true)
+        .withArgName("config_file")
+        .isRequired(false)
+        .withDescription("load configuration from file")
+        .create("config");
+
+    public static final Option opHelp =
+        OptionBuilder.hasArg(false)
+        .isRequired(false)
+        .withDescription("prints this page")
+        .create("help");
+
+    public static final Option opDebug =
+        OptionBuilder.hasArg(false)
+        .isRequired(false)
+        .withDescription("prints debug information")
+        .create("debug");
+
+    /** Logger **/
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
+
+    /** Common httpClient **/
     public static HttpClient httpClient;
 
     public static Config config;
@@ -28,9 +59,7 @@ public class Main {
         final JFrame frame = new JFrame("JDialog Demo");
         final JButton btnLogin = new JButton("Click to login");
 
-        config = new Config(args.length > 1?args[0]: "timetracking.properties");
-        config.list(System.out);
-
+        analyzeCmdLine(args);
  
         btnLogin.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
@@ -56,6 +85,36 @@ public class Main {
         frame.setLayout(new FlowLayout());
         frame.getContentPane().add(btnLogin);
         frame.setVisible(true);
+    }
+
+    private static void analyzeCmdLine(String[] args) throws Exception{
+        // create Options object
+        Options options = new Options();
+
+        // adding options
+        options.addOption(opConfig).addOption(opHelp).addOption(opDebug);
+
+        CommandLineParser parser = new PosixParser();
+        CommandLine cmd = parser.parse( options, args);
+
+        if(cmd.hasOption("help")){
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp( "ProgramName", options );
+            System.exit(0);
+        }
+
+        if(cmd.hasOption("config")){
+            final String filePath = cmd.getOptionValue("c");
+            if(new File(filePath).exists())
+                config = new Config(new FileInputStream(new File(filePath)));
+        } else {
+            config = new Config();
+        }
+
+        if(cmd.hasOption("debug")){
+            config.list(System.out);
+        }
+        
     }
 
 }

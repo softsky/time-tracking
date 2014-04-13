@@ -3,18 +3,26 @@ package timetracking.config;
 import java.util.Properties;
 import java.util.Map;
 import java.util.Iterator;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
+import java.io.InputStream;
+
+import timetracking.Main;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class Config extends Properties{
+    private static final Logger log = LoggerFactory.getLogger(Config.class);
 
-    private final String fileName;
-    public Config(final String fileName) throws IOException{
+    public Config() throws IOException{
+        this(Main.class.getResourceAsStream("/timetracking.properties"));
+    }
+
+    public Config(final InputStream resourceStream) throws IOException{
         super();
-        this.fileName = fileName;
-
-        load(new FileInputStream(new File(fileName)));
+        
+        load(resourceStream);
         
         overrideDefault();
     }
