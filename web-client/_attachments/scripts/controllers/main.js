@@ -1,28 +1,38 @@
 'use strict';
 
+function this_month_start(){
+    var now = new Date()
+    return new Date(now.getYear(), now.getMonth(), 1).getTime();
+}
+
+function this_month_end(){
+    var now = new Date()
+    return new Date(now.getYear(), now.getMonth(), 31).getTime();
+}
+
 angular.module('webClientApp')
   .controller('MainCtrl', function ($scope, $log, cornercouch) {
       $scope.server = cornercouch("http://vm81.softsky.com.ua:5984");
       $scope.server.method = "GET"
-      
-      $scope.submitLogin = function() {
-          $scope.server.login($scope.loginUser, $scope.loginPass)
-              .success( function() {
-                  $scope.loggedIn = true;
-                  // $scope.loginPass = $scope.loginUser = '';
-                  $scope.showInfo = true;
 
-                  $scope.server.getInfo();
-                  $scope.server.getDatabases();
-                  $scope.server.getUUIDs(3);
-                  $scope.server.getUserDoc();
-                  $scope.db = $scope.server.getDB("softsky_timetracking");
-                  $scope.db.method = "GET"
-                  $scope.db.getInfo();
+      $scope.showInfo = true;
 
-                  $scope.db.query("web-client", "byUsername", { include_docs: true, descending: true, limit: 20, key: "archer" });
-              });
-      };
+      $scope.server.getInfo();
+      $scope.server.getDatabases();
+      $scope.server.getUUIDs(3);
+      //$scope.server.getUserDoc();
+      $scope.db = $scope.server.getDB("softsky_timetracking");
+      $scope.db.method = "GET"
+      $scope.db.getInfo();
+
+      $scope.db.query("web-client", "byDateAndUsername", { 
+          include_docs: true, 
+          descending: false, 
+          limit: 20, 
+          start_key: "[\""  + this_month_start() + "\", \"skekes\"]", 
+          start_end: "[\""  + this_month_end() + "\", \"skekes\"]", 
+      });
+
 
       $scope.formatDate = function(row){
           return new Date(parseInt(row.doc._id));

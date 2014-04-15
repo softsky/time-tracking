@@ -1,26 +1,10 @@
-<div class="header">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-  </ul>
-  <h3 class="text-muted">web client</h3>
-</div>
-
-<div class="row marketing" ng-if="!loggedIn">
-<form class='form-inline' name='loginForm' ng-submit="submitLogin()">
-    Name <input type='text' name='user' ng-model='loginUser' required>&nbsp;
-    Password <input type='password' name='pass' ng-model='loginPass' required>&nbsp;
-    <button class='btn' type="submit">Login</button>&nbsp;
-</form>
-</div>
-
-<div class="alert alert-info" ng-show="showInfo" ng-if="loggedIn" >
+<div class="alert alert-info" ng-show="showInfo">
   <button class="btn" ng-click="logout()">Logout</button>
   <ul class="pagination">
     <li><a ng-click="prevClick()" ng-show="db.prevRows.length">Newer</a></li>
     <li><a ng-click="nextClick()" ng-show="db.nextRow">Older</a></li>
   </ul>
+
   <table class="table table-striped">
     <thead>
       <tr><th>UTC</th><th>Subject</th><th>By</th><th>Img</th></tr>
@@ -38,6 +22,11 @@
       </tr>
     </tbody>
   </table>
+
+  <ul class="pagination">
+    <li><a ng-click="prevClick()" ng-show="db.prevRows.length">Newer</a></li>
+    <li><a ng-click="nextClick()" ng-show="db.nextRow">Older</a></li>
+  </ul>
 </div>
 
 <!-- <div class="alert alert-info" ng-show="showInfo"> -->

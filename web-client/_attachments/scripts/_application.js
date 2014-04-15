@@ -5,6 +5,8 @@ angular.module('webClientApp', [
     'ngResource',
     'ngSanitize',
     'ngRoute',
+    'ui.calendar',
+//    'highcharts-ng',
     'CornerCouch'
 ]).config(function ($routeProvider) {
     $routeProvider
@@ -13,10 +15,14 @@ angular.module('webClientApp', [
             controller: 'MainCtrl'
         })
         .when('/login', {
-            templateUrl: 'views/main.html',
+            templateUrl: 'views/login.html',
             controller: 'LoginCtrl'
+        })
+        .when('/calendar', {
+            templateUrl: 'views/calendar.html',
+            controller: 'CalendarCtrl'
         })
         .otherwise({
             redirectTo: '/'
         });
-});
+})

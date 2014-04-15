@@ -5,7 +5,7 @@
   // ".*\\.swp$"
   // ".*\\.bak$"
   "node_modules",
-  "app/",
+  "app",
   "test",
   "Gruntfile.js",
   "bower.json",

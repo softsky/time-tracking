@@ -13,6 +13,7 @@
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
@@ -23,9 +24,54 @@
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
+    <section>
+      <nav class="navbar-default navbar-inverse" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+          </div>
+          
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav ">
+              <li class="active">
+                <a href="#">Link</a>
+              </li>
+              <li>
+                <a href="#">Link</a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="#">Action</a>
+                  </li>
+                  <li>
+                    <a href="#">Another action</a>
+                  </li>
+                  <li>
+                    <a href="#">Something else here</a>
+                  </li>
+                  <li>
+                    <a href="#">Separated link</a>
+                  </li>
+                  <li>
+                    <a href="#">One more separated link</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <div class="nav navbar-nav navbar-right">
+              <a class="btn btn-danger navbar-btn" href="#/singup">Sign up</a>
+              <a class="btn btn-success navbar-btn" href="#/login">Sign in</a>
+            </div>
+          </div>          
+        </div>        
+      </nav>
 
-    <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
+      <div class="container" ng-view="">
+        <!-- Add your site or application content here -->
+      </div>
+    </section>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -45,20 +91,26 @@
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="bower_components/fullcalendar/fullcalendar.js"></script>
+    <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+    <script src="bower_components/highcharts/highcharts.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/angular-cornercouch.js"></script>
-    <script src="scripts/app.js"></script>
+    <script src="scripts/_application.js"></script>
     <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/calendar.js"></script>
     <!-- endbuild -->
 </body>
 </html>
