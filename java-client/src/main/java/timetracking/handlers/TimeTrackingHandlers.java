@@ -56,7 +56,7 @@ public class TimeTrackingHandlers {
 
     public static class CaptureListenerHandler implements CaptureListener{
         private final String SCREENSHOT_DIRECTORY = 
-            Main.config.getProperty("SCREENSHOT_DIRECTORY", System.getenv("HOME") + "/.timetracking"); // 5 minutes for idle timeout
+            Main.config.getProperty("SCREENSHOT_DIRECTORY", System.getProperty("user.home") + "/.timetracking"); // 5 minutes for idle timeout
         private final String DATABASE_NAME = 
             Main.config.getProperty("DATABASE_NAME", "softsky_timetracking"); // 5 minutes for idle timeout
         private final String IMAGE_TYPE = 
@@ -93,7 +93,7 @@ public class TimeTrackingHandlers {
                     BufferedImage screenShot = robotForScreen.createScreenCapture(screenBounds);
                     String outputFile = now 
                         + "_"
-                        + screen.getIDstring().replaceAll(":", "-")                     
+                        + screen.getIDstring().replaceAll(":\\/", "-")
                         + "."
                         + ext;   
                     ImageIO.write(screenShot, ext, new File(parentDir, outputFile));
