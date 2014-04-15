@@ -76,7 +76,7 @@ public class TimeTrackingService {
 
     private class CheckIdle extends TimerTask{
         public void run(){
-            long imIdleFor = new X11LinuxIdleTimeDetector().getSystemIdleTime();
+            long imIdleFor = IdleTimeDetectorFactory.getInstance().getSystemIdleTime();
             if(imIdleFor >= IDLE_TIMEOUT && TimeTrackingService.this.status == TimeTrackingService.Status.ACTIVE){
                 TimeTrackingService.this.status = TimeTrackingService.Status.IDLE;
                 statusAnnouncer.announce().onChange(TimeTrackingService.Status.IDLE);
