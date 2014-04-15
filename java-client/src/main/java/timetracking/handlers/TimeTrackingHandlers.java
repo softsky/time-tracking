@@ -93,7 +93,7 @@ public class TimeTrackingHandlers {
                     BufferedImage screenShot = robotForScreen.createScreenCapture(screenBounds);
                     String outputFile = now 
                         + "_"
-                        + screen.getIDstring().replaceAll(":\\/", "-")
+                        + normalizeString(screen.getIDstring())
                         + "."
                         + ext;   
                     ImageIO.write(screenShot, ext, new File(parentDir, outputFile));
@@ -146,6 +146,10 @@ public class TimeTrackingHandlers {
         return ((hours > 0) ? hours + " hours ": "") +
             ((minutes > 0) ? minutes + " minutes ":"") + 
             (seconds + " seconds");
+    }
+
+    public static String normalizeString(final String monitorId){
+        return monitorId.replaceAll("[:\\\\]", "-");
     }
             
 }

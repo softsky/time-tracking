@@ -18,7 +18,7 @@ dependencies {
 
   compile("commons-cli:commons-cli:1.2")
   
-  testCompile 'junit:junit:4.11'
+  testCompile("junit:junit:4.11")
 }
  
 task run(type: JavaExec) {
