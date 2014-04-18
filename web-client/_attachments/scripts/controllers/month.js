@@ -1,10 +1,7 @@
 'use strict';
 
 angular.module('webClientApp')
-  .controller('MonthCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MonthCtrl', function ($scope, $location, $routeParams, $log) {
+      $scope.year = $routeParams.year;
+      $scope.month = $routeParams.month;
   });

@@ -35,16 +35,28 @@ angular.module('webClientApp', [
         .when('/day/', {
             redirectTo: function(){
                 var date = new Date()
-                return '/day/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+                return ['/day', date.getFullYear(), (date.getMonth() + 1), date.getDate()].join('/');
             }
         })
-        .when('/week', {
+        .when('/week/:year/:week', {
             templateUrl: 'views/week.html',
             controller: 'WeekCtrl'
         })
-        .when('/month', {
+        .when('/week', {
+            redirectTo: function(){
+                var date = new Date()
+                return ['/week', date.getFullYear(), date.getWeek()].join('/');
+            }
+        })
+        .when('/month/:year/:month', {
             templateUrl: 'views/month.html',
             controller: 'MonthCtrl'
+        })
+        .when('/month', {
+            redirectTo: function(){
+                var date = new Date()
+                return ['/month', date.getFullYear(), (date.getMonth() + 1)].join('/');
+            }
         })
         .otherwise({
             redirectTo: '/'
