@@ -59,8 +59,8 @@ public class LoginDialog extends JDialog {
     private JPasswordField pfPassword;
     private JLabel lbUsername;
     private JLabel lbPassword;
-    private AbstractButton btnLogin;
-    private AbstractButton btnCancel;
+    private JButton btnLogin;
+    private JButton btnCancel;
     private boolean succeeded;
  
     public LoginDialog(Frame parent) {
@@ -159,6 +159,8 @@ public class LoginDialog extends JDialog {
  
         getContentPane().add(panel, BorderLayout.CENTER);
         getContentPane().add(bp, BorderLayout.PAGE_END);
+        JRootPane rootPane = SwingUtilities.getRootPane(btnLogin); 
+        rootPane.setDefaultButton(btnLogin);
  
         setMinimumSize(new Dimension(500,300));
         pack();

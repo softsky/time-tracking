@@ -55,6 +55,7 @@ public class TimeTrackingHandlers {
     }
 
     public static class CaptureListenerHandler implements CaptureListener{
+        private final int TUMBNAIL_WIDTH = 250;
         private final String SCREENSHOT_DIRECTORY = 
             Main.config.getProperty("SCREENSHOT_DIRECTORY", System.getProperty("user.home") + "/.timetracking"); // 5 minutes for idle timeout
         private final String DATABASE_NAME = 
@@ -64,6 +65,8 @@ public class TimeTrackingHandlers {
         private final String SERVER_URL = 
             Main.config.getProperty("SERVER_URL"); // server URL to connect to
         private final String username;
+
+        
         public CaptureListenerHandler(String userName, String password) throws MalformedURLException{
             username = userName;
             Main.httpClient = new StdHttpClient.Builder()
@@ -97,6 +100,18 @@ public class TimeTrackingHandlers {
                         + "."
                         + ext;   
                     ImageIO.write(screenShot, ext, new File(parentDir, outputFile));
+
+                    Image thumbnail = screenShot.getScaledInstance(TUMBNAIL_WIDTH, -1, Image.SCALE_SMOOTH);
+                    BufferedImage bufferedThumbnail = new BufferedImage(thumbnail.getWidth(null),
+                                                                        thumbnail.getHeight(null),
+                                                                        BufferedImage.TYPE_INT_RGB);
+                    bufferedThumbnail.getGraphics().drawImage(thumbnail, 0, 0, null);
+                    String thumbnailFile = now 
+                        + "_"
+                        + normalizeString(screen.getIDstring())
+                        + "_tumbnail."
+                        + ext;
+                    ImageIO.write(bufferedThumbnail, "jpeg", new File(parentDir, thumbnailFile));
                 }
 
                 for(String file : parentDir.list()){ 
