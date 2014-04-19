@@ -16,6 +16,8 @@ angular.module('webClientApp')
     })
     .controller('DayCtrl',function ($scope, $location, $routeParams, $log, $data) {
 	$log.info($routeParams);
+	
+	$scope.username = "archer";
 	$scope.year = $routeParams.year;
 	$scope.month = $routeParams.month;
 	$scope.day = $routeParams.day;
@@ -25,13 +27,15 @@ angular.module('webClientApp')
 	    $log.info(newVal);
 	}, true)
 	
-	var thisDate = new Date($scope.year, parseInt($scope.month) - 1, $scope.day).getTime()
-	$scope.db.query("web-client", "byDateAndUsername", {
-            include_docs: true, 
-            descending: false, 
-            limit: 20, 
-            start_key: "[\""  + thisDate + "\", \"skekes\"]", 
-            start_end: "[\""  + thisDate + (24 * 3600 * 1000) + "\", \"skekes\"]",  // adding 24 hours day
+	$scope.$watch("username", function(newVal){
+	    var thisDate = new Date($scope.year, parseInt($scope.month) - 1, $scope.day).getTime()
+	    $scope.db.query("web-client", "byDateAndUsername", {
+		include_docs: true, 
+		descending: false, 
+		limit: 20, 
+		start_key: "[\""  + (thisDate) + "\",\"" + $scope.username + "\"]", 
+		end_key: "[\""  + (thisDate + (24 * 3600 * 1000)) + "\",\"" + $scope.username + "\"]",  // adding 24 hours
+	    })
 	})
   })
 
