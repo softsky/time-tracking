@@ -17,7 +17,7 @@ angular.module('webClientApp')
     .controller('DayCtrl',function ($scope, $location, $routeParams, $log, $data) {
 	$log.info($routeParams);
 	
-	$scope.username = "archer";
+	//$scope.username = "archer";
 	$scope.year = $routeParams.year;
 	$scope.month = $routeParams.month;
 	$scope.day = $routeParams.day;
@@ -33,8 +33,8 @@ angular.module('webClientApp')
 		include_docs: true, 
 		descending: false, 
 		limit: 20, 
-		start_key: "[\""  + (thisDate) + "\",\"" + $scope.username + "\"]", 
-		end_key: "[\""  + (thisDate + (24 * 3600 * 1000)) + "\",\"" + $scope.username + "\"]",  // adding 24 hours
+		startkey: [(thisDate), $scope.username], 
+		endkey: [(thisDate + (24 * 3600 * 1000)), $scope.username],  // adding 24 hours
 	    })
 	})
   })
