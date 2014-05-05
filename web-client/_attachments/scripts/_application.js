@@ -24,14 +24,13 @@ angular.module('webClientApp', [
             return hash;
         } 
 
-        function intToARGB(i){
-            return ((i>>24)&0xFF).toString(16) + 
-                ((i>>16)&0xFF).toString(16) + 
-                ((i>>8)&0xFF).toString(16) + 
-                (i&0xFF).toString(16);
+        function intToRGB(i){
+            return ((i >> 16) & 0xFF).toString(16) + 
+                ((i >> 8) & 0xFF).toString(16) + 
+                ((i >> 0) & 0xFF).toString(16);
         }
 
-        return intToARGB(hashCode(this));
+        return '#' + intToRGB(hashCode(this));
     }
     Number.prototype.timeToString = function(){
         var time = this;
