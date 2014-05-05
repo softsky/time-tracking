@@ -40,6 +40,7 @@ angular.module('webClientApp')
               month: $scope.month - 1, 
               date: $scope.day,
               header:{
+                  left: '',
                   center: 'title',
                   right: ''
               },

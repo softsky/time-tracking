@@ -31,8 +31,8 @@ angular.module('webClientApp')
 	$scope.$watch("username", function(newVal){
 	    $scope.db.list("web-client", "intervals", "byDateAndUsername", {
 		descending: false, 
-		startkey: [(weekBeginDate), $scope.username], 
-		endkey: [(weekBeginDate + (7 * 24 * 3600 * 1000)), $scope.username]  // adding 7 days
+		startkey: [(weekBeginDate.getTime()), $scope.username], 
+		endkey: [(weekBeginDate.getTime() + (7 * 24 * 3600 * 1000)), $scope.username]  // adding 7 days
 	    })
 	})
 
@@ -41,9 +41,10 @@ angular.module('webClientApp')
                 height: '800',
                 editable: false,
                 year: weekBeginDate.getFullYear(), 
-                month: weekBeginDate.getMonth() - 1, 
+                month: weekBeginDate.getMonth(),
                 date: weekBeginDate.getDate(),
                 header:{
+                    left: '',
                     center: 'title',
                     right: ''
                 },
