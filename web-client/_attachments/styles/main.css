@@ -77,3 +77,12 @@ body {
     border-bottom: 0;
   }
 }
+.tooltipevent {
+    border: black solid 1px;
+    padding: 5px;
+    background:lightgray;
+    color: gray;
+    font-weight: bold;
+    position:absolute;
+    z-index:10001;
+}

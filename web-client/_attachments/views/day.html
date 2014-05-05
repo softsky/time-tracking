@@ -2,10 +2,4 @@
   <option>archer</option>
   <option>skekes</option>
 </select>
-
-<p>This is the day view.
-Year: {{ year }}
-Month: {{ month }}
-Day: {{ day }}
-</p>
-<p>{{ db.rows }}</p>
+<div ui-calendar="uiConfig.calendar" ng-model="eventSources" ng-controller="DayCtrl" calendar="timeCalendar">

@@ -1,4 +1,5 @@
-<p>This is the week view.
-Year: {{ year }}
-Week: {{ week }}
-</p>
+<select ng-model="username">
+  <option>archer</option>
+  <option>skekes</option>
+</select>
+<div ui-calendar="uiConfig.calendar" ng-model="eventSources" ng-controller="WeekCtrl" calendar="timeCalendar">

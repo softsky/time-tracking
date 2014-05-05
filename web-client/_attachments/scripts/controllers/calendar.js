@@ -15,21 +15,19 @@ angular.module('webClientApp')
                 dayClick: $scope.alertEventOnClick,
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
+                eventRender: function(event, element) {
+                    // element.qtip({
+                    //     content: event.description
+                    // });
+                },
+                eventAfterRender: function(event, element, view){
+                    var hoursWorked = (event.end - event.start)/1000/3600;
+                    element.css("width", (hoursWorked/24) * 161)
+                    element.attr("title", "Moveing")
+                }
+
             }
         };
-
-        $scope.calendarOptions = {
-            eventRender: function(event, element) {
-                // element.qtip({
-                //     content: event.description
-                // });
-            },
-            eventAfterRender: function(event, element, view){
-                var hoursWorked = (event.end - event.start)/1000/3600;
-                element.css("width", (hoursWorked/24) * 161)
-                element.attr("title", "Moveing")
-            }
-        }
 
         $scope.events = [
             {

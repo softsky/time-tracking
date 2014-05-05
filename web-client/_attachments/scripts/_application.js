@@ -13,9 +13,60 @@ angular.module('webClientApp', [
     Date.prototype.getWeek = function() {
         var onejan = new Date(this.getFullYear(), 0, 1);
         return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-    }}
+    }
 
-)
+    String.prototype.toColor = function() {
+        function hashCode(str) { // java String#hashCode
+            var hash = 0;
+            for (var i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return hash;
+        } 
+
+        function intToARGB(i){
+            return ((i>>24)&0xFF).toString(16) + 
+                ((i>>16)&0xFF).toString(16) + 
+                ((i>>8)&0xFF).toString(16) + 
+                (i&0xFF).toString(16);
+        }
+
+        return intToARGB(hashCode(this));
+    }
+    Number.prototype.timeToString = function(){
+        var time = this;
+        var hours, minutes, seconds;
+
+        hours = Math.floor(time / (3600 * 1000));
+        minutes = Math.floor((time - (hours * 3600 * 1000)) / (60 * 1000));
+        seconds = Math.floor((time - (hours * 3600 * 1000) - minutes * (60 * 1000)) / 1000);
+        
+        return ((hours > 0) ? hours + " hours ": "") +
+            ((minutes > 0) ? minutes + " minutes ":"") + 
+            (seconds + " seconds");
+    }
+}).value('DefaultUIConfig', {
+        eventMouseover: function(calEvent, jsEvent) {
+            var tooltip = '<div class="tooltipevent">' + 
+                (calEvent.end - calEvent.start).timeToString()
+            '</div>';
+            $("body").append(tooltip);
+            $(this).mouseover(function(e) {
+                $(this).css('z-index', 10000);
+                $('.tooltipevent').fadeIn('500');
+                $('.tooltipevent').fadeTo('10', 1.9);
+            }).mousemove(function(e) {
+                $('.tooltipevent').css('top', e.pageY + 10);
+                $('.tooltipevent').css('left', e.pageX + 20);
+            });
+        },
+
+        eventMouseout: function(calEvent, jsEvent) {
+            $(this).css('z-index', 8);
+            $('.tooltipevent').remove();
+        },
+
+})
     .provider('$data', function (){
 	function Provider(cornercouch){
 	    this.db = cornercouch('http://vm81.softsky.com.ua:5984').getDB('softsky_timetracking');
