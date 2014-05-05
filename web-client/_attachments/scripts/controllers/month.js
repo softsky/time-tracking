@@ -7,7 +7,7 @@ angular.module('webClientApp')
       var monthBeginDate = new Date($scope.year, $scope.month - 1, 1)
       var monthEndDate = new Date(new Date($scope.year, $scope.month, 1) - (24 * 3600 * 1000))
 
-      $scope.username = "";
+      $scope.username = "skekes";
 
       $scope.events = [];
 

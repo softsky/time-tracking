@@ -45,7 +45,7 @@ angular.module('webClientApp', [
             ((minutes > 0) ? minutes + " minutes ":"") + 
             (seconds + " seconds");
     }
-}).value('DefaultUIConfig', {
+}).value('DefaultUIConfig',  {
         eventMouseover: function(calEvent, jsEvent) {
             var tooltip = '<div class="tooltipevent">' + 
                 (calEvent.end - calEvent.start).timeToString()
@@ -66,7 +66,27 @@ angular.module('webClientApp', [
             $('.tooltipevent').remove();
         },
 
-})
+        dayClick: function(date, allDay, jsEvent, view) {
+
+            // if (allDay) {
+            //     alert('Clicked on the entire day: ' + date);
+            // }else{
+            //     alert('Clicked on the slot: ' + date);
+            // }
+
+            // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+            // alert('Current view: ' + view.name);
+
+            // // change the day's background color just for fun
+            // $(this).css('background-color', 'red');
+            window.location.hash = '/day/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+
+        }    
+        //eventDrop: $scope.alertOnDrop,
+        //eventResize: $scope.alertOnResize,
+
+    })
     .provider('$data', function (){
 	function Provider(cornercouch){
 	    this.db = cornercouch('http://vm81.softsky.com.ua:5984').getDB('softsky_timetracking');
