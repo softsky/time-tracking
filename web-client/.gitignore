@@ -3,6 +3,7 @@
 .tmp
 /.emacs.desktop
 /.emacs.desktop.lock
+/_attachments
 /app
 _attachments/bower_components
 dist
