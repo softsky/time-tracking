@@ -2,7 +2,7 @@
     "name": "web-client",
     "version": "0.0.0",
     "options": {
-        "appPath": "_attachments"
+        "appPath": "app"
     },
     "dependencies": {
         "angular": "1.2.6",
