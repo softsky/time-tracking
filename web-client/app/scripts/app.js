@@ -71,10 +71,7 @@ angular.module('webClientApp', [
     eventClick: function(calEvent, jsEvent, view) {
         var date = calEvent.start;
         window.location.hash = '/screenshot/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
-    },
-    //eventDrop: $scope.alertOnDrop,
-    //eventResize: $scope.alertOnResize,
-
+    }
 }).provider('$data', function (){
     function Provider(cornercouch){
         this.server = cornercouch()
