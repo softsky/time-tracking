@@ -37,7 +37,8 @@ angular.module('webClientApp')
         }
 
         $scope.getImagePath = function(row){
-            return "../../" + row.doc._id + "/" + Object.keys(row.doc._attachments)[0];
+            var thumbs =  _.filter(Object.keys(row.doc._attachments), function(it){ return it.indexOf('umbnail') > -1 }) // FIXME: change wildcard
+            return "../../" + row.doc._id + "/" + (thumbs.length?thumbs[0]:Object.keys(row.doc._attachments)[0]);
         }
 
         $scope.nextClick = function() { $scope.db.queryNext(); delete $scope.detail }
