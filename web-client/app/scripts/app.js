@@ -79,8 +79,11 @@ angular.module('webClientApp', [
             // // change the day's background color just for fun
             // $(this).css('background-color', 'red');
             window.location.hash = '/day/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
-
-        }    
+        },
+    eventClick: function(calEvent, jsEvent, view) {
+        var date = calEvent.start;
+        window.location.hash = '/day/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+    },
         //eventDrop: $scope.alertOnDrop,
         //eventResize: $scope.alertOnResize,
 
