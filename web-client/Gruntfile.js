@@ -67,7 +67,7 @@ module.exports = function (grunt) {
       },
         proxies: [
             {
-                context: ['/_session', '/_utils', '/_users', '/softsky_timetracking'],
+                context: ['/_session', '/_utils', '/_users', '/_all_dbs', '/_uuids', '/_active_tasks', '/softsky_timetracking'],
                 host: 'vm81.softsky.com.ua',
                 port: 5984,
                 https: false,
