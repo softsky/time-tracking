@@ -4,7 +4,6 @@
 /.emacs.desktop
 /.emacs.desktop.lock
 /_attachments
-/app
-_attachments/bower_components
+app/bower_components
 dist
 node_modules
