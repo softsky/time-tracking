@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('webClientApp')
-  .controller('LoginCtrl', function ($scope, $location, cornercouch) {
-      $scope.server = cornercouch("http://vm81.softsky.com.ua:5984");
+  .controller('LoginCtrl', function ($scope, $location, $data) {
+      $scope.server = $data.server;
       $scope.server.method = "GET"
       $scope.loginUser = "archer";
       $scope.loginPass = "XtujNj12";

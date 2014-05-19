@@ -90,7 +90,8 @@ angular.module('webClientApp', [
     })
     .provider('$data', function (){
 	function Provider(cornercouch){
-	    this.db = cornercouch('http://vm81.softsky.com.ua:5984').getDB('softsky_timetracking');
+            this.server = cornercouch()
+	    this.db = this.server.getDB('softsky_timetracking');
 	    this.db.method = "GET";
 	}
 	this.$get = function(cornercouch){
