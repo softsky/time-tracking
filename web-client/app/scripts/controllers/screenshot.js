@@ -1,17 +1,15 @@
 'use strict';
 
-function this_month_start(){
-    var now = new Date()
-    return new Date(now.getYear(), now.getMonth(), 1).getTime();
-}
-
-function this_month_end(){
-    var now = new Date()
-    return new Date(now.getYear(), now.getMonth(), 31).getTime();
-}
-
 angular.module('webClientApp')
-    .controller('ScreenshotCtrl', function ($scope, $log, $data) {
+    .controller('ScreenshotCtrl', function ($scope, $log, $routeParams, $data) {
+        $scope.year = $routeParams.year;
+        $scope.month = $routeParams.month;
+        $scope.day = $routeParams.day;
+
+        var monthBeginDate = new Date($scope.year, $scope.month?$scope.month - 1:0, $scope.day?$scope.day:1)
+        // FIXME: sometime it could take the first day(s) of next month
+        var monthEndDate = new Date(new Date($scope.year, $scope.month?$scope.month - 1:0, $scope.day?$scope.day:31).getTime() + 24 * 3600 * 1000);
+
         $scope.server = $data.server;
         $scope.server.method = "GET"
 
@@ -20,7 +18,7 @@ angular.module('webClientApp')
         $scope.server.getInfo();
         $scope.server.getDatabases();
         $scope.server.getUUIDs(3);
-        //$scope.server.getUserDoc();
+        $scope.server.getUserDoc();
         $scope.db = $data.db;
         $scope.db.method = "GET"
         $scope.db.getInfo();
@@ -29,8 +27,8 @@ angular.module('webClientApp')
             include_docs: true, 
             descending: false, 
             limit: 20, 
-            startkey: [this_month_start(), "skekes" ],
-            endkey: [this_month_end(), "skekes" ]
+            startkey: [monthBeginDate.getTime(), "skekes" ],
+            endkey: [monthEndDate.getTime(), "skekes" ]
         });
 
 

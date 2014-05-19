@@ -82,7 +82,7 @@ angular.module('webClientApp', [
         },
     eventClick: function(calEvent, jsEvent, view) {
         var date = calEvent.start;
-        window.location.hash = '/day/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+        window.location.hash = '/screenshot/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
     },
         //eventDrop: $scope.alertOnDrop,
         //eventResize: $scope.alertOnResize,
@@ -103,10 +103,6 @@ angular.module('webClientApp', [
             .when('/', {
                 redirectTo: '/month'
             })
-            .when('/screenshot', {
-		templateUrl: 'views/screenshot.html',
-		controller: 'ScreenshotCtrl'
-            })
             .when('/login', {
 		templateUrl: 'views/login.html',
 		controller: 'LoginCtrl'
@@ -114,6 +110,16 @@ angular.module('webClientApp', [
             .when('/calendar', {
 		templateUrl: 'views/calendar.html',
 		controller: 'CalendarCtrl'
+            })
+            .when('/screenshot/:year/:month?/:day?', {
+		templateUrl: 'views/screenshot.html',
+		controller: 'ScreenshotCtrl'
+            })
+            .when('/screenshot', {
+		redirectTo: function(){
+                    var date = new Date()
+                    return ['/screenshot', date.getFullYear(), (date.getMonth() + 1), date.getDate()].join('/');
+		}
             })
             .when('/day/:year/:month/:day', {
 		templateUrl: 'views/day.html',
