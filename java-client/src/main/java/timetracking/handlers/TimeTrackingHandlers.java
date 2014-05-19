@@ -96,7 +96,7 @@ public class TimeTrackingHandlers {
                     BufferedImage screenShot = robotForScreen.createScreenCapture(screenBounds);
                     String outputFile = now 
                         + "_"
-                        + normalizeString(screen.getIDstring())
+                        + normalizeDeviceId(screen.getIDstring())
                         + "."
                         + ext;   
                     ImageIO.write(screenShot, ext, new File(parentDir, outputFile));
@@ -108,7 +108,7 @@ public class TimeTrackingHandlers {
                     bufferedThumbnail.getGraphics().drawImage(thumbnail, 0, 0, null);
                     String thumbnailFile = now 
                         + "_"
-                        + normalizeString(screen.getIDstring())
+                        + normalizeDeviceId(screen.getIDstring())
                         + "_thumbnail."
                         + ext;
                     ImageIO.write(bufferedThumbnail, "jpeg", new File(parentDir, thumbnailFile));
@@ -163,7 +163,7 @@ public class TimeTrackingHandlers {
             (seconds + " seconds");
     }
 
-    public static String normalizeString(final String monitorId){
+    public static String normalizeDeviceId(final String monitorId){
         return monitorId.replaceAll("[:\\\\]", "-");
     }
             
