@@ -11,7 +11,7 @@ function this_month_end(){
 }
 
 angular.module('webClientApp')
-    .controller('MainCtrl', function ($scope, $log, $data) {
+    .controller('ScreenshotCtrl', function ($scope, $log, $data) {
         $scope.server = $data.server;
         $scope.server.method = "GET"
 

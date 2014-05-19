@@ -101,8 +101,11 @@ angular.module('webClientApp', [
     .config(function ($routeProvider) {
 	$routeProvider
             .when('/', {
-		templateUrl: 'views/main.html',
-		controller: 'MainCtrl'
+                redirectTo: '/month'
+            })
+            .when('/screenshot', {
+		templateUrl: 'views/screenshot.html',
+		controller: 'ScreenshotCtrl'
             })
             .when('/login', {
 		templateUrl: 'views/login.html',
