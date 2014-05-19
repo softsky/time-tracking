@@ -7,12 +7,11 @@ angular.module('webClientApp')
       var monthBeginDate = new Date($scope.year, $scope.month - 1, 1)
       var monthEndDate = new Date(new Date($scope.year, $scope.month, 1) - (24 * 3600 * 1000))
 
-      $scope.username = "skekes";
+      $scope.username = "";
 
       $scope.events = [];
 
       $scope.eventSources = [ $scope.events ]
-
 
       $scope.db = $data.db;
       $scope.$watch("db.data", function(data){
@@ -22,13 +21,13 @@ angular.module('webClientApp')
                   $scope.events.push(angular.extend(interval, {title: user, color: user.toColor(), allDay: false}))
               })
           }
-      }, true)
+      }, false)
       
       $scope.$watch("username", function(newVal){
 	  $scope.db.list("web-client", "intervals", "byDateAndUsername", {
 	      descending: false, 
-	      startkey: [monthBeginDate.getTime(), $scope.username], 
-	      endkey: [monthEndDate.getTime(), $scope.username]  // adding 7 days
+	      startkey: [monthBeginDate.getTime(), $scope.username || ''], 
+	      endkey: [monthEndDate.getTime(), $scope.username || '']  // adding 7 days
 	  })
       })
 
