@@ -44,7 +44,7 @@ angular.module('webClientApp', [
             ((minutes > 0) ? minutes + " minutes ":"") + 
             (seconds + " seconds");
     }
-}).value('DefaultUIConfig',  {
+}).constant('DefaultUIConfig',  {
         eventMouseover: function(calEvent, jsEvent) {
             var tooltip = '<div class="tooltipevent">' + 
                 (calEvent.end - calEvent.start).timeToString()
@@ -66,7 +66,6 @@ angular.module('webClientApp', [
         },
 
         dayClick: function(date, allDay, jsEvent, view) {
-
             // if (allDay) {
             //     alert('Clicked on the entire day: ' + date);
             // }else{

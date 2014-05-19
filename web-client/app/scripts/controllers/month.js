@@ -48,6 +48,6 @@ angular.module('webClientApp')
           }
       };
 
-      $scope.uiConfig.calendar = angular.extend(DefaultUIConfig, $scope.uiConfig.calendar);
+      $scope.uiConfig.calendar = angular.extend(angular.copy(DefaultUIConfig), $scope.uiConfig.calendar); // prevent DefaultUIConfig from modification
 
   });
