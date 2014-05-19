@@ -45,113 +45,99 @@ angular.module('webClientApp', [
             (seconds + " seconds");
     }
 }).constant('DefaultUIConfig',  {
-        eventMouseover: function(calEvent, jsEvent) {
-            var tooltip = '<div class="tooltipevent">' + 
-                (calEvent.end - calEvent.start).timeToString()
-            '</div>';
-            $("body").append(tooltip);
-            $(this).mouseover(function(e) {
-                $(this).css('z-index', 10000);
-                $('.tooltipevent').fadeIn('500');
-                $('.tooltipevent').fadeTo('10', 1.9);
-            }).mousemove(function(e) {
-                $('.tooltipevent').css('top', e.pageY + 10);
-                $('.tooltipevent').css('left', e.pageX + 20);
-            });
-        },
+    eventMouseover: function(calEvent, jsEvent) {
+        var tooltip = '<div class="tooltipevent">' + 
+            (calEvent.end - calEvent.start).timeToString()
+        '</div>';
+        $("body").append(tooltip);
+        $(this).mouseover(function(e) {
+            $(this).css('z-index', 10000);
+            $('.tooltipevent').fadeIn('500');
+            $('.tooltipevent').fadeTo('10', 1.9);
+        }).mousemove(function(e) {
+            $('.tooltipevent').css('top', e.pageY + 10);
+            $('.tooltipevent').css('left', e.pageX + 20);
+        });
+    },
 
-        eventMouseout: function(calEvent, jsEvent) {
-            $(this).css('z-index', 8);
-            $('.tooltipevent').remove();
-        },
+    eventMouseout: function(calEvent, jsEvent) {
+        $(this).css('z-index', 8);
+        $('.tooltipevent').remove();
+    },
 
-        dayClick: function(date, allDay, jsEvent, view) {
-            // if (allDay) {
-            //     alert('Clicked on the entire day: ' + date);
-            // }else{
-            //     alert('Clicked on the slot: ' + date);
-            // }
-
-            // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-
-            // alert('Current view: ' + view.name);
-
-            // // change the day's background color just for fun
-            // $(this).css('background-color', 'red');
-            window.location.hash = '/day/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
-        },
+    dayClick: function(date, allDay, jsEvent, view) {
+        window.location.hash = '/day/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+    },
     eventClick: function(calEvent, jsEvent, view) {
         var date = calEvent.start;
         window.location.hash = '/screenshot/' + date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
     },
-        //eventDrop: $scope.alertOnDrop,
-        //eventResize: $scope.alertOnResize,
+    //eventDrop: $scope.alertOnDrop,
+    //eventResize: $scope.alertOnResize,
 
-    })
-    .provider('$data', function (){
-	function Provider(cornercouch){
-            this.server = cornercouch()
-	    this.db = this.server.getDB('softsky_timetracking');
-	    this.db.method = "GET";
-	}
-	this.$get = function(cornercouch){
-	    return new Provider(cornercouch)
-	}
-    })
-    .config(function ($routeProvider) {
-	$routeProvider
-            .when('/', {
-                redirectTo: '/month'
-            })
-            .when('/login', {
-		templateUrl: 'views/login.html',
-		controller: 'LoginCtrl'
-            })
-            .when('/calendar', {
-		templateUrl: 'views/calendar.html',
-		controller: 'CalendarCtrl'
-            })
-            .when('/screenshot/:year/:month?/:day?', {
-		templateUrl: 'views/screenshot.html',
-		controller: 'ScreenshotCtrl'
-            })
-            .when('/screenshot', {
-		redirectTo: function(){
-                    var date = new Date()
-                    return ['/screenshot', date.getFullYear(), (date.getMonth() + 1), date.getDate()].join('/');
-		}
-            })
-            .when('/day/:year/:month/:day', {
-		templateUrl: 'views/day.html',
-		controller: 'DayCtrl'
-            })
-            .when('/day/', {
-		redirectTo: function(){
-                    var date = new Date()
-                    return ['/day', date.getFullYear(), (date.getMonth() + 1), date.getDate()].join('/');
-		}
-            })
-            .when('/week/:year/:week', {
-		templateUrl: 'views/week.html',
-		controller: 'WeekCtrl'
-            })
-            .when('/week', {
-		redirectTo: function(){
-                    var date = new Date()
-                    return ['/week', date.getFullYear(), date.getWeek()].join('/');
-		}
-            })
-            .when('/month/:year/:month', {
-		templateUrl: 'views/month.html',
-		controller: 'MonthCtrl'
-            })
-            .when('/month', {
-		redirectTo: function(){
-                    var date = new Date()
-                    return ['/month', date.getFullYear(), (date.getMonth() + 1)].join('/');
-		}
-            })
-            .otherwise({
-		redirectTo: '/'
-            });
-    })
+}).provider('$data', function (){
+    function Provider(cornercouch){
+        this.server = cornercouch()
+	this.db = this.server.getDB('softsky_timetracking');
+	this.db.method = "GET";
+    }
+    this.$get = function(cornercouch){
+	return new Provider(cornercouch)
+    }
+}).config(function ($routeProvider) {
+    $routeProvider
+        .when('/', {
+            redirectTo: '/month'
+        })
+        .when('/login', {
+	    templateUrl: 'views/login.html',
+	    controller: 'LoginCtrl'
+        })
+        .when('/calendar', {
+	    templateUrl: 'views/calendar.html',
+	    controller: 'CalendarCtrl'
+        })
+        .when('/screenshot/:year/:month?/:day?', {
+	    templateUrl: 'views/screenshot.html',
+	    controller: 'ScreenshotCtrl'
+        })
+        .when('/screenshot', {
+	    redirectTo: function(){
+                var date = new Date()
+                return ['/screenshot', date.getFullYear(), (date.getMonth() + 1), date.getDate()].join('/');
+	    }
+        })
+        .when('/day/:year/:month/:day', {
+	    templateUrl: 'views/day.html',
+	    controller: 'DayCtrl'
+        })
+        .when('/day/', {
+	    redirectTo: function(){
+                var date = new Date()
+                return ['/day', date.getFullYear(), (date.getMonth() + 1), date.getDate()].join('/');
+	    }
+        })
+        .when('/week/:year/:week', {
+	    templateUrl: 'views/week.html',
+	    controller: 'WeekCtrl'
+        })
+        .when('/week', {
+	    redirectTo: function(){
+                var date = new Date()
+                return ['/week', date.getFullYear(), date.getWeek()].join('/');
+	    }
+        })
+        .when('/month/:year/:month', {
+	    templateUrl: 'views/month.html',
+	    controller: 'MonthCtrl'
+        })
+        .when('/month', {
+	    redirectTo: function(){
+                var date = new Date()
+                return ['/month', date.getFullYear(), (date.getMonth() + 1)].join('/');
+	    }
+        })
+        .otherwise({
+	    redirectTo: '/'
+        });
+})
