@@ -109,7 +109,7 @@ public class TimeTrackingHandlers {
                     String thumbnailFile = now 
                         + "_"
                         + normalizeString(screen.getIDstring())
-                        + "_tumbnail."
+                        + "_thumbnail."
                         + ext;
                     ImageIO.write(bufferedThumbnail, "jpeg", new File(parentDir, thumbnailFile));
                 }
@@ -129,7 +129,7 @@ public class TimeTrackingHandlers {
             // if the second parameter is true, the database will be created if it doesn't exists
             CouchDbConnector couchdb = dbInstance.createConnector(DATABASE_NAME, true);
             log.info("CouchDB connection established");
-
+L
             log.info("publishing file:" + fileName);
 
             File file = new File(parentDir, fileName);
