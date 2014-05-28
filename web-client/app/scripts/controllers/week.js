@@ -9,7 +9,7 @@ angular.module('webClientApp')
 	
 	$scope.year = $routeParams.year;
 	$scope.week = $routeParams.week;
-	var weekBeginDate = new Date(new Date($scope.year, 0, 1).getTime() + (($scope.week - 1)* 7 * 24 * 3600 * 1000))
+	var weekBeginDate = new Date(new Date($scope.year, 0, 1).getTime() + (($scope.week - 1) * 7 * 24 * 3600 * 1000))
 
 	$scope.username = "";
 

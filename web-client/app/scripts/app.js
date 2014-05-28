@@ -6,7 +6,7 @@ angular.module('webClientApp', [
     'ngSanitize',
     'ngRoute',
     'ui.calendar',
-//    'highcharts-ng',
+    'highcharts-ng',
     'CornerCouch'
 ]).config(function(){
     // some custom configuration
@@ -132,6 +132,14 @@ angular.module('webClientApp', [
 	    templateUrl: 'views/month.html',
 	    controller: 'MonthCtrl'
         })
+        .when('/chart/:year/month/:month', {
+	    templateUrl: 'views/chart.html',
+	    controller: 'ChartCtrl'
+        })
+        .when('/chart/:year/week/:week', {
+	    templateUrl: 'views/chart.html',
+	    controller: 'ChartCtrl'
+        })
         .when('/month', {
 	    redirectTo: function(){
                 var date = new Date()
@@ -141,7 +149,7 @@ angular.module('webClientApp', [
         .otherwise({
 	    redirectTo: '/'
         });
-}).config(function ($provide, $httpProvider, $location) {
+}).config(['$provide', '$httpProvider', function ($provide, $httpProvider) {
   // Intercept http calls.
   $provide.factory('UnauthorizedHttpInterceptor', function ($q) {
     return {
@@ -175,7 +183,7 @@ angular.module('webClientApp', [
         
         // Return the promise rejection.
           if(rejection.status == 401) { // Unauthorized 
-              $location.path('/login') // redirecting to login
+              window.location.hash = '/login' // redirecting to login
           }
         return $q.reject(rejection);
       }
@@ -184,5 +192,4 @@ angular.module('webClientApp', [
  
   // Add the interceptor to the $httpProvider.
   $httpProvider.interceptors.push('UnauthorizedHttpInterceptor');
- 
-});
+}]);

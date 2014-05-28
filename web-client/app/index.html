@@ -63,7 +63,7 @@
             <div class="nav navbar-nav navbar-right">
               <a class="btn btn-danger navbar-btn" href="#/singup">Sign up</a>
               <a class="btn btn-success navbar-btn" href="#/login">Sign in</a>
-              <a class="btn btn-success navbar-btn" href="#/logout" ng-if="loggedIn == false">Logout</a>
+              <a class="btn btn-success navbar-btn" href="#/logout">Logout</a>
             </div>
           </div>          
         </div>        
@@ -102,9 +102,11 @@
     <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
     <script src="bower_components/fullcalendar/fullcalendar.js"></script>
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
-    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highstock.src/index.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/CornerCouch/angular-cornercouch.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/momentjs/moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -117,6 +119,7 @@
     <script src="scripts/controllers/week.js"></script>
     <script src="scripts/controllers/month.js"></script>
     <script src="scripts/controllers/logout.js"></script>
+    <script src="scripts/controllers/chart.js"></script>
     <!-- endbuild -->
 </body>
 </html>
